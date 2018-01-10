@@ -40,6 +40,7 @@ export abstract class BaseRoute {
 
     private initRoutes(): void {
         const methods = this.getRouterMethodNames(this);
+        console.log('ROUTES:::::', methods);
         [...methods].map((method) => {
             this[method](this.router);
         });
