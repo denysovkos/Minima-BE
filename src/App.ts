@@ -4,9 +4,12 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
 import * as passport from 'passport';
+import * as colors from 'colors';
 
 import {default as routers} from './routers';
 import { PassportConfig } from './config/passport';
+
+import { getAllUsers, isAdminUsersInDb, createFirstAdmin } from './routers/user/Init';
 
 class App {
 
@@ -15,22 +18,39 @@ class App {
     constructor() {
         this.setEnvironment();
         this.express = express();
-        this.database();
+
+        this.database()
+            .then (async () => {
+                console.log(colors.green('Checking for first admin'));
+                let adminUsersInDb = await isAdminUsersInDb();
+                
+                if (!adminUsersInDb) {
+                    await createFirstAdmin();
+                } else {
+                    console.log(colors.green('All users already created'));
+                }
+            })
+            .catch (err =>  console.log(colors.red('ERR IN USER IN DB INIT: ', err)));
+
         this.middleware();
         this.routes();
     }
 
-
     /**
      * database connection
      */
-    private database(): void {
-        mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
-        mongoose.connection.on('error', () => {
+    private database(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            console.log('Connecting to Data base')
+            mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
+            mongoose.connection.on('error', () => {
             console.log('MongoDB connection error. Please make sure MongoDB is running.');
             process.exit();
+            })
+
+            resolve(true);
         });
-    }
+    };
 
     /**
      * http(s) request middleware
@@ -67,6 +87,10 @@ class App {
      */
     private routes(): void {
         this.express.use('/v1', routers);
+
+        //TODO: REMOVE THIS AFTER USER AUTH COMPLETED!!!
+        this.express.get('/users', getAllUsers);
+
         this.express.use('/', (req, res) => {
             res.status(404).send({ error: `path doesn't exist`});
         });

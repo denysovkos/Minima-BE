@@ -1,11 +1,12 @@
 {
-  "name": "MinimaCMS Back end",
+  "name": "minima-cms-back-end",
   "version": "0.0.1",
   "description": "Minima CMS Back end",
   "main": "index.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
+    "colors": "^1.1.2",
     "debug": "^2.6.8",
     "dotenv": "^2.0.0",
     "express": "^4.15.3",

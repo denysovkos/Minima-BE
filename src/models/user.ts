@@ -5,12 +5,14 @@ export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
+    role: string;
 }
 
 export interface IUserModel {
     createUser(user: IUser, callback: Function): void
     comparePassword(candidatePassword: string, hash: string, callback: Function): void
     findByEmail(email: string, callback: Function): void
+    updateUser(id: object, user: IUser, callback: Function): void
 }
 
 const userSchema = new Schema({
@@ -20,9 +22,14 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
+        type: String,
+        required: true
+    },
+    role: {
         type: String,
         required: true
     },
@@ -42,6 +49,17 @@ userSchema.static('createUser', (user: IUser, callback: Function) => {
             if(err) throw err;
             user.password = hash;
             user.save(callback);
+        });
+    });
+});
+
+userSchema.static('updateUser', (id: string, user: IUser, callback: Function) => {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
+            if(err) throw err;
+            user.password = hash;
+            user._id = id;
+            User.findByIdAndUpdate({ _id: id }, user, callback);
         });
     });
 });
