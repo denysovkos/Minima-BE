@@ -9,14 +9,13 @@ export class Auth extends BaseRoute {
     public loginAction(router: Router): void {
         router.post('/login', (req: Request, res: Response) => {
             let email = req.body.email;
-
             const re = /\S+@\S+\.\S+/;
             
             if (!re.test(email)) {
                 res.status(400);
                 res.json({
                     success: false,
-                    message: 'wrong input.'
+                    message: 'Validation error - wrong email input.'
                 });
                 return false;
             }
@@ -39,6 +38,11 @@ export class Auth extends BaseRoute {
                             res.json({
                                 success: true,
                                 token: token,
+                                user: {
+                                    name: user.name,
+                                    role: user.role,
+                                    email: user.email
+                                }
                             });
                         } else {
                             res.status(400);
@@ -121,9 +125,15 @@ export class Auth extends BaseRoute {
 
     public profileAction(router: Router): void {
         router.get('/profile', this.guard, (req: Request, res: Response) => {
+            let userProfile = {
+                email: req.body.user.email,
+                name: req.body.user.name,
+                role: req.body.user.role,
+            };
+            
             res.json({
                 success: true,
-                user: req.body.user
+                user: userProfile
             });
         });
     }

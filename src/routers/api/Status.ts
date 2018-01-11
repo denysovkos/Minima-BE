@@ -10,7 +10,7 @@ export class Status extends BaseRoute {
             let dbStatus = mongoose.connection.readyState;
 
             res.json({
-                success: true,
+                apiStatus: true,
                 DBStatus: dbStatus === 1 ? 'alive' : 'down'
             });
         });
