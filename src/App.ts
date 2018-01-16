@@ -89,7 +89,7 @@ class App {
         this.express.use('/v1', routers);
 
         //TODO: REMOVE THIS AFTER USER AUTH COMPLETED!!!
-        this.express.get('/users', getAllUsers);
+        //this.express.get('/users', getAllUsers);
 
         this.express.use('/', (req, res) => {
             res.status(404).send({ error: `path doesn't exist`});
