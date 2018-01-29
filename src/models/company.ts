@@ -1,4 +1,5 @@
-import {Schema, Model, Document, model} from 'mongoose';
+import {Schema, Model, Document, model, Types} from 'mongoose';
+import company from '../routers/company/index';
 
 export interface ICompany extends Document {
     name: string;
@@ -7,6 +8,10 @@ export interface ICompany extends Document {
     bankAccounts: string[];
     ceo: string;
     code: number;
+}
+
+export interface ICompanyModel {
+    findAll(callback: Function): ICompany[]
 }
 
 const companySchema = new Schema({
@@ -42,9 +47,20 @@ const companySchema = new Schema({
     updatedAt: {
         type: Date,
         "default": Date.now()
+    },
+    _id: {
+        type: String
+    },
+    relatedUser: {
+        type: Array,
+        required: true
     }
 });
 
-export type CompanyModel = Model<ICompany> & ICompany;
+companySchema.static('findAll', (callback: Function) => {
+    Company.find({}, callback);
+});
+
+export type CompanyModel = Model<ICompany> & ICompanyModel & ICompany;
 
 export const Company: CompanyModel = <CompanyModel>model<ICompany>("Company", companySchema);

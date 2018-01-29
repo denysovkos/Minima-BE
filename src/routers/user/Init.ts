@@ -5,15 +5,6 @@ import { has } from 'lodash';
 import { User } from '../../models/user';
 import user from './index';
 
-//TODO: DELETE THIS FUNC!
-export const getAllUsers = (req: Request, res: Response, next: NextFunction): void => {
-    User.find({}, (err, users) => {
-        console.log('USERS: ', users);
-        res.send(users);
-        next();
-    })
-};
-
 export async function isAdminUsersInDb(): Promise<boolean> {
     let users = await User.find({role: 'admin'}, (err, users) => {
         if (err) console.log(err)

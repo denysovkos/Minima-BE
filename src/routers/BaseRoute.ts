@@ -9,6 +9,7 @@ export abstract class BaseRoute {
     router: Router;
     logger: any;
     guard: any;
+    currentUser: any;
 
     constructor() {
         this.guard = guard;
@@ -40,7 +41,6 @@ export abstract class BaseRoute {
 
     private initRoutes(): void {
         const methods = this.getRouterMethodNames(this);
-        console.log('ROUTES:::::', methods);
         [...methods].map((method) => {
             this[method](this.router);
         });

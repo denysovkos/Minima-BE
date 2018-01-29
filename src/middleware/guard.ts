@@ -1,5 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from "express";
+import { pick } from 'lodash';
 
 /**
  * http(s) middleware guard
@@ -19,7 +20,7 @@ export const guard = (req: Request, res: Response, next: NextFunction) => {
                         message: 'Failed to authenticate token.'
                     });
                 } else {
-                    req.body.user = user._doc;
+                    req.body.user = pick(user._doc, ['_id', 'role', 'email']);
                     next();
                 }
             });
