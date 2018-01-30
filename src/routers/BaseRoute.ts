@@ -1,15 +1,15 @@
-import { Router } from 'express';
-import * as winston from 'winston';
+import { Router } from "express";
+import * as winston from "winston";
 
-import { guard } from '../middleware/guard';
+import { guard } from "../middleware/guard";
 
 export abstract class BaseRoute {
 
-    private readonly _registeredMethodEnding = 'Action';
-    router: Router;
-    logger: any;
-    guard: any;
-    currentUser: any;
+    private readonly _registeredMethodEnding = "Action";
+    public router: Router;
+    public logger: any;
+    public guard: any;
+    public currentUser: any;
 
     constructor() {
         this.guard = guard;
@@ -20,15 +20,15 @@ export abstract class BaseRoute {
     }
 
     public getRoutes(): Router {
-        return this.router
+        return this.router;
     }
 
-    getRouterMethodNames(obj): Set<string> {
-        let methods = new Set();
+    public getRouterMethodNames(obj): Set<string> {
+        const methods = new Set();
         while (obj = Reflect.getPrototypeOf(obj)) {
-            let keys = Reflect.ownKeys(obj);
+            const keys = Reflect.ownKeys(obj);
             keys.forEach((k) => {
-                if(k.toString().indexOf(this._registeredMethodEnding,
+                if (k.toString().indexOf(this._registeredMethodEnding,
                         (k.toString().length - this._registeredMethodEnding.length)) !== -1) {
                     methods.add(k);
                 }
@@ -46,4 +46,3 @@ export abstract class BaseRoute {
         });
     }
 }
-

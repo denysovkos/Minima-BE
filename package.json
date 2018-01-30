@@ -12,6 +12,7 @@
     "express": "^4.15.3",
     "iconv-lite": "^0.4.17",
     "jsonwebtoken": "^7.4.1",
+    "lodash": "^4.17.4",
     "mongoose": "^4.10.4",
     "morgan": "^1.8.2",
     "passport": "^0.3.2",
@@ -31,7 +32,7 @@
     "@types/node": "^6.0.77",
     "@types/passport": "^0.3.3",
     "@types/passport-jwt": "^2.0.20",
-    "chai": "^4.0.2",
+    "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "concurrently": "^3.5.1",
     "gulp": "^3.9.1",
@@ -47,7 +48,8 @@
     "build": "gulp build",
     "watch-ts": "gulp watch",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run start\"",
-    "test": "mocha -t 30000 dist/tests/**/*.spec.js"
+    "test": "mocha -t 30000 dist/tests/**/*.spec.js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' --fix --force"
   },
   "repository": {
     "type": "git",

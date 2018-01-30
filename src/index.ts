@@ -1,9 +1,8 @@
-import * as http from 'http';
-import * as debug from 'debug';
-import * as winston from 'winston';
+import * as debug from "debug";
+import * as http from "http";
+import * as winston from "winston";
 
-import App  from './App';
-
+import App from "./App";
 
 class Server {
 
@@ -25,10 +24,9 @@ class Server {
 
     }
 
-
     private debugMod(): void {
-        debug('ts-express:server');
-        winston.add(winston.transports.File, { filename: 'application.log' });
+        debug("ts-express:server");
+        winston.add(winston.transports.File, { filename: "application.log" });
     }
 
     public constructor() {
@@ -38,23 +36,23 @@ class Server {
 
     private runServer(): void {
         this.port = this.normalizePort(process.env.PORT || 3500);
-        App.set('port', this.port);
+        App.set("port", this.port);
         this.createServer();
     }
 
     private createServer() {
         this.server = http.createServer(App);
         this.server.listen(this.port);
-        
-        this.server.on('listening', () => {
-            let address = this.server.address();
-            let bind = (typeof address === 'string') ? `pipe ${address}` : `port ${address.port}`;
+
+        this.server.on("listening", () => {
+            const address = this.server.address();
+            const bind = (typeof address === "string") ? `pipe ${address}` : `port ${address.port}`;
             console.log(`Listening on ${bind}`);
             debug(`Listening on ${bind}`);
         });
 
-        this.server.on('error', (error: NodeJS.ErrnoException) => {
-            if (error.syscall !== 'listen') throw error;
+        this.server.on("error", (error: NodeJS.ErrnoException) => {
+            if (error.syscall !== "listen") { throw error; }
             console.error(error);
             process.exit(1);
         });
@@ -65,8 +63,8 @@ class Server {
      * @param {number | string} val
      * @returns {number}
      */
-    private normalizePort(val: number|string): number {
-        let port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
+    private normalizePort(val: number | string): number {
+        const port: number = (typeof val === "string") ? parseInt(val, 10) : val;
         return port;
     }
 

@@ -1,5 +1,5 @@
-import {Schema, Model, Document, model, Types} from 'mongoose';
-import company from '../routers/company/index';
+import {Document, Model, model, Schema, Types} from "mongoose";
+import company from "../routers/company/index";
 
 export interface ICompany extends Document {
     name: string;
@@ -11,56 +11,56 @@ export interface ICompany extends Document {
 }
 
 export interface ICompanyModel {
-    findAll(callback: Function): ICompany[]
+    findAll(callback: Function): ICompany[];
 }
 
 const companySchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     address: {
         type: Array,
-        required: true
+        required: true,
     },
     logo: {
         type: String,
-        required: true
+        required: true,
     },
     bankAccounts: {
         type: Array,
-        required: true
+        required: true,
     },
     ceo: {
         type: String,
-        required: true
+        required: true,
     },
     code: {
         type: Number,
         required: true,
-        unique: true
+        unique: true,
     },
     createAt: {
         type: Date,
-        "default": Date.now()
+        default: Date.now(),
     },
     updatedAt: {
         type: Date,
-        "default": Date.now()
+        default: Date.now(),
     },
     _id: {
-        type: String
+        type: String,
     },
     relatedUser: {
         type: Array,
-        required: true
-    }
+        required: true,
+    },
 });
 
-companySchema.static('findAll', (callback: Function) => {
+companySchema.static("findAll", (callback: Function) => {
     Company.find({}, callback);
 });
 
 export type CompanyModel = Model<ICompany> & ICompanyModel & ICompany;
 
-export const Company: CompanyModel = <CompanyModel>model<ICompany>("Company", companySchema);
+export const Company: CompanyModel = model<ICompany>("Company", companySchema) as CompanyModel;

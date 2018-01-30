@@ -1,0 +1,40 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:latest"
+    ],
+    "jsRules": {
+        "max-line-length": {
+            "options": [120]
+        }
+    },
+    "rules": {
+        "max-line-length": {
+            "options": [120]
+        },
+        "object-literal-sort-keys": false,
+        "new-parens": true,
+        "no-arg": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": false,
+        "no-consecutive-blank-lines": false,
+        "no-console": false,
+        "comment-format": false,
+        "no-shadowed-variable": false,
+        "ban-types": {
+            "options": [
+                ["Object", "Avoid using the `Object` type. Did you mean `object`?"],
+                ["Boolean", "Avoid using the `Boolean` type. Did you mean `boolean`?"],
+                ["Number", "Avoid using the `Number` type. Did you mean `number`?"],
+                ["String", "Avoid using the `String` type. Did you mean `string`?"],
+                ["Symbol", "Avoid using the `Symbol` type. Did you mean `symbol`?"]
+            ]
+        },
+        "member-ordering": false,
+        "variable-name": false,
+        "no-empty": false,
+        "no-implicit-dependencies": [true, "dev"]
+
+    },
+    "rulesDirectory": []
+}

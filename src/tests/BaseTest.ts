@@ -1,15 +1,14 @@
-import * as chai from 'chai';
-import * as chaiHttp from 'chai-http';
+import * as chai from "chai";
+import * as chaiHttp from "chai-http";
 
-import { server } from '../index'
-
+import { server } from "../index";
 
 export class BaseTest {
 
-    chai: any;
-    should: any;
-    route: string;
-    server: any;
+    public chai: any;
+    public should: any;
+    public route: string;
+    public server: any;
 
     constructor() {
         this.server = server.getServerInstance();

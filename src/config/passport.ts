@@ -1,7 +1,7 @@
-import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Passport } from "passport";
+import { ExtractJwt, Strategy } from "passport-jwt";
 
-import { User } from '../models/user';
+import { User } from "../models/user";
 
 /**
  * passport jwt configuration
@@ -10,14 +10,14 @@ export class PassportConfig {
 
     public passport: Passport;
 
-    constructor(passport: any){
+    constructor(passport: any) {
         this.passport = passport;
     }
 
     public init() {
-        let opts = {
+        const opts = {
             jwtFromRequest: ExtractJwt.fromAuthHeader(),
-            secretOrKey: process.env.APPLICATION_SECRET
+            secretOrKey: process.env.APPLICATION_SECRET,
         };
 
         this.passport.use(new Strategy(opts, (jwtPayload, done) => {
